@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// CRUD - create, read, update, delete
+// CRUD - create, read, update, delete.
 
 app.get("/users", async (_, res: Response): Promise<Response<IUser[]>> => {
   try {
