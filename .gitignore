@@ -3,7 +3,7 @@
 /node_modules
 
 .env
-
+node.js-module.iml
 # IDEs and editors
 /.idea
 /.idea*
