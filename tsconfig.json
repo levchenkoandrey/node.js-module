@@ -22,7 +22,7 @@
     "noImplicitAny": true,                            /* Enable error reporting for expressions and declarations with an implied 'any' type. */
     "skipLibCheck": true,                                 /* Skip type checking all .d.ts files. */
     "noUnusedLocals": true,                           /* Enable error reporting when local variables aren't read. */
-    "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
+//    "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
 
     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
     // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
