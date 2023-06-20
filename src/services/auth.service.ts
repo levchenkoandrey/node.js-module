@@ -31,6 +31,7 @@ class AuthService {
       }
       const tokensPair = await tokenService.generateTokenPair({
         _id: user._id,
+        email: user.email,
       });
 
       await Token.create({ ...tokensPair, _userId: user._id });
