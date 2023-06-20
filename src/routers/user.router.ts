@@ -8,11 +8,6 @@ const router = Router();
 // CRUD - create, read, update, delete.
 router.get("/", userController.getAll);
 
-router.post(
-  "/",
-  commonMiddleware.isBodyValid(UserValidator.create),
-  userController.create
-);
 router.get(
   "/:userId",
   commonMiddleware.isIDValid("userId"),
