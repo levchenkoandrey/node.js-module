@@ -5,12 +5,15 @@ import { IUser } from "../Types";
 import { ICredentials, ITokensPair } from "../Types/token.types";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
+import { emailService } from "./email.service";
 
 class AuthService {
   public async register(data: IUser): Promise<void> {
     try {
       const hashedPassword = await passwordService.hash(data.password);
+
       await User.create({ ...data, password: hashedPassword });
+      await emailService.sendMail(data.email);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }

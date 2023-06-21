@@ -19,3 +19,4 @@ app.listen(configs.PORT, () => {
   mongoose.connect(configs.DB_URL);
   console.log(`Server has started on PORT ${configs.PORT} `);
 });
+export const NODE_TLS_REJECT_UNAUTHORIZED = "0";
