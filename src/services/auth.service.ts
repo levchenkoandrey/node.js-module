@@ -1,11 +1,12 @@
-import { ApiError } from "../errors";
-import { User } from "../models";
-import { Token } from "../models/Token.model";
-import { IUser } from "../Types";
-import { ICredentials, ITokensPair } from "../Types/token.types";
-import { passwordService } from "./password.service";
-import { tokenService } from "./token.service";
-import { emailService } from "./email.service";
+import {ApiError} from "../errors";
+import {User} from "../models";
+import {Token} from "../models/Token.model";
+import {IUser} from "../Types";
+import {ICredentials, ITokensPair} from "../Types/token.types";
+import {passwordService} from "./password.service";
+import {tokenService} from "./token.service";
+import {emailService} from "./email.service";
+import {EEmailActions} from "../enums/email.enam";
 
 class AuthService {
   public async register(data: IUser): Promise<void> {
@@ -13,7 +14,7 @@ class AuthService {
       const hashedPassword = await passwordService.hash(data.password);
 
       await User.create({ ...data, password: hashedPassword });
-      await emailService.sendMail(data.email);
+      await emailService.sendMail(data.email, EEmailActions.WELCOME,{name: data.name});
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }

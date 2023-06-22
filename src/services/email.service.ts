@@ -2,6 +2,10 @@ import nodemailer from "nodemailer";
 import hbs from "nodemailer-express-handlebars";
 import * as path from "path";
 
+import { configs } from "../configs";
+import { allTemplates } from "../constants/email.constants";
+import { EEmailActions } from "../enums/email.enam";
+
 class EmailService {
   private transporter;
   constructor() {
@@ -9,8 +13,8 @@ class EmailService {
       from: "No reply",
       service: "gmail",
       auth: {
-        user: "andreiilevchenko@gmail.com",
-        pass: "duixtjkfcwkxuzez",
+        user: configs.NO_REPLY_EMAIL,
+        pass: configs.NO_REPLY_PASSWORD,
       },
     });
     const hbsOptions = {
@@ -35,19 +39,19 @@ class EmailService {
     };
     this.transporter.use("compile", hbs(hbsOptions));
   }
-  public async sendMail(email: string) {
+  public async sendMail(
+    email: string,
+    emailAction: EEmailActions,
+    context: Record<string, string | number> = {}
+  ) {
+    const { templateName, subject } = allTemplates[emailAction];
     const mailOptions = {
-      subject: "HELLO!!!!!!",
-      template: "register",
+      to: email,
+      subject,
+      template: templateName,
+      context,
     };
-    return this.transporter.sendMail(
-      mailOptions
-      //     {
-      //   to: email,
-      //   subject: "HELLO!!!!!!",
-      //   html: "<div>Вітаю. Якщо ви отримали це повідомлення, невідкладно сповістіть відправника про це. Дякую. Гарного дня!!!</div>",
-      // }
-    );
+    return await this.transporter.sendMail(mailOptions);
   }
 }
 
