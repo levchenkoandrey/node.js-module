@@ -7,3 +7,8 @@ export interface IUser extends Document {
   email: string;
   password: string;
 }
+
+export interface IChangePassword {
+  newPassword: string;
+  oldPassword: string;
+}
