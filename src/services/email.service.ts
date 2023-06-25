@@ -4,7 +4,7 @@ import * as path from "path";
 
 import { configs } from "../configs";
 import { allTemplates } from "../constants/email.constants";
-import { EEmailActions } from "../enums/email.enam";
+import { EEmailActions } from "../enums/email.enum";
 
 class EmailService {
   private transporter;
@@ -45,6 +45,9 @@ class EmailService {
     context: Record<string, string | number> = {}
   ) {
     const { templateName, subject } = allTemplates[emailAction];
+
+    context.frontUrl = configs.FRONT_URL;
+
     const mailOptions = {
       to: email,
       subject,

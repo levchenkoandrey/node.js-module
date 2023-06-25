@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 
-import { ETokenType } from "../enums/token.type.enam";
+import { EActionTokenTypes } from "../enums/action-token-type.enum";
+import { ETokenType } from "../enums/token.type.enum";
 import { ApiError } from "../errors";
+import { Action } from "../models/Action.model";
 import { Token } from "../models/Token.model";
 import { tokenService } from "../services/token.service";
 
@@ -54,6 +56,32 @@ class AuthMiddleware {
     } catch (e) {
       next(e);
     }
+  }
+  public checkActionToken(tokenType: EActionTokenTypes) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const actionToken = req.params.token;
+
+        if (!actionToken) {
+          throw new ApiError("Token is not provided", 400);
+        }
+
+        const jwtPayload = tokenService.checkActionToken(
+          actionToken,
+          tokenType
+        );
+        const tokenFromDb = await Action.findOne({ actionToken });
+
+        if (!tokenFromDb) {
+          throw new ApiError("Token is not valid", 400);
+        }
+
+        req.res.locals = { jwtPayload, tokenFromDb };
+        next();
+      } catch (e) {
+        next(e);
+      }
+    };
   }
 }
 export const authMiddleware = new AuthMiddleware();
