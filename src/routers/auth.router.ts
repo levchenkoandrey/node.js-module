@@ -1,11 +1,15 @@
-import {Router} from "express";
+import { Router } from "express";
 
-import {authController} from "../controllers/auth.controller";
-import {authMiddleware, commonMiddleware, userMiddleware,} from "../middelwares";
-import {IUser} from "../Types";
-import {ICredentials} from "../Types/token.types";
-import {UserValidator} from "../validators";
-import {EActionTokenTypes} from "../enums/action-token-type.enum";
+import { authController } from "../controllers/auth.controller";
+import { EActionTokenTypes } from "../enums/action-token-type.enum";
+import {
+  authMiddleware,
+  commonMiddleware,
+  userMiddleware,
+} from "../middelwares";
+import { IUser } from "../Types";
+import { ICredentials } from "../Types/token.types";
+import { UserValidator } from "../validators";
 
 const router = Router();
 router.post(
@@ -13,6 +17,11 @@ router.post(
   commonMiddleware.isBodyValid(UserValidator.create),
   userMiddleware.findAndThrow("email"),
   authController.register
+);
+router.post(
+  "/register/:token",
+  authMiddleware.checkActionToken(EActionTokenTypes.Activate),
+  authController.activate
 );
 router.post(
   "/login",
