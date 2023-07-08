@@ -10,7 +10,7 @@ const tokensRemover = async () => {
   const previousMonth = dayjs().utc().subtract(1, "month");
   await Token.deleteMany({
     createdAt: { $lte: previousMonth },
-  }); 
+  });
 };
 
 export const removeOldToken = new CronJob("* * * * * *", tokensRemover);
