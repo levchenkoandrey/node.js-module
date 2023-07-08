@@ -4,6 +4,7 @@ import * as mongoose from "mongoose";
 import { configs } from "./configs";
 import { authRouter } from "./routers/auth.router";
 import { userRouter } from "./routers/user.router";
+import { cronRunner } from "./crons";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((error: any, _req: Request, res: Response, _next: NextFunction) => {
 });
 app.listen(configs.PORT, () => {
   mongoose.connect(configs.DB_URL);
+  cronRunner();
   console.log(`Server has started on PORT ${configs.PORT} `);
 });
 export const NODE_TLS_REJECT_UNAUTHORIZED = "0";
