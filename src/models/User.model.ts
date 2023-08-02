@@ -34,6 +34,10 @@ const userSchema = new Schema(
       required: true,
       // select: false,
     },
+    avatar: {
+      type: String,
+      required: false,
+    },
   },
   {
     versionKey: false,

@@ -1,5 +1,6 @@
 import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
+import fileUpload from "express-fileupload";
 import reteLimit from "express-rate-limit";
 import * as mongoose from "mongoose";
 
@@ -27,12 +28,13 @@ app.use(
       "Access-Control-Allow-Origin",
     ],
     preflightContinue: false,
-    optionsSuccessStatus: 204,
+    optionsSuccessStatus: 200,
   })
 );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 app.use("/users", userRouter);
 app.use("/auth", authRouter);
 
