@@ -20,6 +20,7 @@ class SmsService {
         messagingServiceSid: configs.TWILIO_SERVICE_SID,
         to: phone,
       });
+
     } catch (e) {
       console.error(e.message);
     }
