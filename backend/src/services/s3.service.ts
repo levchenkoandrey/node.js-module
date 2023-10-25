@@ -29,11 +29,10 @@ class S3Service {
     const filePath = this.buildPath(itemType, itemId, file.name);
     await this.client.send(
       new PutObjectCommand({
-        Bucket: configs.AWS_S3_NAME,
-        Key: filePath,
-        Body: file.data,
-        ACL: configs.AWS_S3_ACL,
-        ContentType: file.mimetype,
+          Body: file.data,
+          Bucket: configs.AWS_S3_NAME,
+          ContentType: file.mimetype,
+          Key: filePath,
       })
     );
     return filePath;
@@ -54,14 +53,14 @@ class S3Service {
   ): Promise<void> {
     const filePath = this.buildPath(itemType, itemId, file.name);
 
-    await this.client.send(
+      await this.client.send(
       new PutObjectCommand({
-        Bucket: configs.AWS_S3_NAME,
-        Key: filePath,
-        Body: stream,
-        ACL: configs.AWS_S3_ACL,
-        ContentType: file.mimetype,
-        ContentLength: file.size,
+          // ACL: configs.AWS_S3_ACL,
+          Body: stream,
+          Bucket: configs.AWS_S3_NAME,
+          ContentLength: file.size,
+          ContentType: file.mimetype,
+          Key: filePath,
       })
     );
   }

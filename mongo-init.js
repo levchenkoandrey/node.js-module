@@ -1,0 +1,12 @@
+db.createUser(
+    {
+        user:'Levchenko-Andrii',
+        pwd:'1094Kolesnik',
+        roles:[
+            {
+              role:'readWrite',
+              db:'Levchenko-Andrii'
+            }
+        ]
+    }
+)
